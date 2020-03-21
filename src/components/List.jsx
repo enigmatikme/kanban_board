@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Ticket from './Ticket';
 import Modal from './Modal';
 
-function List() {
+function List({listName}) {
   const [tickets, setTickets] = useState([]);
   const [showModal, toggleModal] = useState(false);
   
