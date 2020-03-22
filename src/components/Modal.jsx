@@ -4,7 +4,13 @@ function Modal({ addTicket, showModal }) {
   const [ticket, setTicket] = useState({
     title: '',
     description: '',
+    assignedTo: [],
   })
+  // const [ticket, setTicket] = useState({
+  //   title: '',
+  //   description: '',
+  //   assignedTo: [],
+  // })
 
   const handleChange = (e) => {
     if (e.target.id === 'title') {
@@ -19,12 +25,13 @@ function Modal({ addTicket, showModal }) {
   }
 
   const handleSubmit = (e) => {
-    // console.log(JSON.stringify(ticket));
     e.preventDefault();
+
     addTicket(ticket)
     setTicket({
       title: '',
-      description: ''
+      description: '',
+      assignedTo: []
     })
   }
 
@@ -32,11 +39,11 @@ function Modal({ addTicket, showModal }) {
     return null;
   }
   return (
-    <div>
-      <input type="text" onChange={handleChange} id="title"/>
-      <input type="text" onChange={handleChange} id="description"/>
-      <button onClick={handleSubmit}>Submit</button>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input type="text" onChange={handleChange} id="title" placeholder="Ticket Name"/>
+      <input type="text" onChange={handleChange} id="description" placeholder="Ticket Description"/>
+      <button type="submit" style={{display:"none"}}>Submit</button>
+    </form>
   )
 }
 

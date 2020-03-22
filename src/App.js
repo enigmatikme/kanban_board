@@ -6,6 +6,7 @@ import List from './components/List';
 function App() {
   const [lists, setLists] = useState([]);
   const [showModal, toggleModal] = useState(false);
+  const [listTitle, setListTitle] = useState('');
 
   const handleClick = () => {
     setLists([...lists, "lol"])
@@ -13,9 +14,8 @@ function App() {
   }
 
   const handleChange = (e) => {
-    let title = '';
-    title += e.target.value;
-
+    // e.preventDefault();
+    setListTitle(e.target.value);
   }
 
   const addList = () => {
@@ -25,27 +25,35 @@ function App() {
     }])
   }
 
+  const handleSubmit = (e) => {
+    e.stopPropagation()
+
+    toggleModal(!showModal)
+    setLists([...lists, {
+      listName: [listTitle],
+      tasks: []
+    }])
+
+    setListTitle('');
+  }
+
   return (
     <div className="App">
-    <button class="create_list_btn" onClick={() => toggleModal(!showModal)}>Add List</button>
-    {/* <button class="create_list_btn" onClick={handleClick}>Add List</button> */}
-    { 
-      showModal ? 
-      <div>
-        <input type="text" onChange={handleChange} id="title"/> 
-        <button onClick={handleClick}>Submit</button>
-      </div> : null 
-    }
-
-    <Board />
-    <div className="board_lists">
-
+      <button class="create_list_btn" onClick={() => toggleModal(!showModal)}>Add Another List</button>
       { 
-        lists.map((list, i) => {
-          return <List key={i} listName={list[i]}/>
-        })
+        showModal ? 
+        <form onSubmit={handleSubmit}>
+          <input type="text" onChange={handleChange} id="title" placeholder="Add List Name"/> 
+        </form> : null 
       }
-    </div>
+      <div className="board">
+        
+        { 
+          lists.map((list, i) => {
+            return <List key={i} listName={list.listName} />
+          })
+        }
+      </div>
     </div>
   );
 }

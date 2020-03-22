@@ -11,19 +11,30 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.board_lists {
+.board {
   display: flex;
   justify-content: space-around;
 }
 
-.list_container {
+.list_wrapper {
   border: solid black 2px;
   padding: 2rem;
+  border-radius: 10px;
+  min-width: 250px;
+  max-width: 250px;
+  max-height: 100%;
 }
 
 .ticket {
   border: solid purple 2px;
   padding: 1rem;
   margin-bottom: 1.5rem;
+  text-align: left; 
+  
+
+}
+
+.ticket > button {
+  border: 3px green solid; 
 }
 
