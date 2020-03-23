@@ -31,7 +31,6 @@ function List({listName, listIndex}) {
   }
 
   const handleDragStart = (e, index) => {
-    // e.preventDefault();
     console.log("dragged index", index);
     // e.dataTransfer.setData("text/plain",index)
     setDraggedItem(tickets[index]);
@@ -58,13 +57,12 @@ function List({listName, listIndex}) {
 
   }
 
-  const handleDragOver = (e, listIndex) => {
+  const handleDragOver = (e, ticketIndex) => {
     e.preventDefault();
-    console.log("DRAG OVER")
-    if (draggedItem === tickets[listIndex]) return null;
+    console.log("LIST NUMBER", listIndex)
+    if (draggedItem === tickets[ticketIndex]) return null;
     const newOrder = tickets.filter(ticket => ticket !== draggedItem)
-    newOrder.splice(listIndex, 0, draggedItem);
-    console.log("NEW ORDER", newOrder)
+    newOrder.splice(ticketIndex, 0, draggedItem);
     setTickets(newOrder);
   }
 
@@ -72,9 +70,11 @@ function List({listName, listIndex}) {
     <div className="list_wrapper">
       <div> {listName} </div> 
       <div>
-      {tickets.map((ticket, i) => {
-        return <Ticket handleDragStart={handleDragStart} handleDragOver={handleDragOver} {...ticket} addUser={addUser} key={i} index={i} users={users}/>
-      })}
+      {
+        tickets.map((ticket, i) => {
+          return <Ticket handleDragStart={handleDragStart} handleDragOver={handleDragOver} {...ticket} addUser={addUser} key={i} index={i} users={users}/>
+        })
+      }
       <Modal showModal={showModal} addTicket={addTicket}  />
       <button class="add_tix_btn" type="submit" onClick={() => toggleModal(!showModal)}>Add Ticket</button>
       </div>

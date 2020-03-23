@@ -1,29 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
-import Board from './components/Board';
+// import Board from './components/Board';
 import List from './components/List';
-import Test from './components/Test';
 
 function App() {
   const [lists, setLists] = useState([]);
   const [showModal, toggleModal] = useState(false);
   const [listTitle, setListTitle] = useState('');
 
-  const handleClick = () => {
-    setLists([...lists, "lol"])
-    console.log(lists);
-  }
-
   const handleChange = (e) => {
     // e.preventDefault();
     setListTitle(e.target.value);
-  }
-
-  const addList = () => {
-    setLists([...lists, {
-      listName: '',
-      tasks: []
-    }])
   }
 
   const handleSubmit = (e) => {
@@ -45,7 +32,6 @@ function App() {
   return (
     <div className="App">
       <button class="create_list_btn" onClick={() => toggleModal(!showModal)}>Add Another List</button>
-      {/* <Test /> */}
       { 
         showModal ? 
         <form onSubmit={handleSubmit}>
