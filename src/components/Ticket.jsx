@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import users from './user';
 
-function Ticket({title, description, assignedTo}) {
-  const [value, setValue] = useState('');
+function Ticket({title, description, addUser, index, users, onDragStart, onDrop, onDragOver}) {
+  const [selectedUser, setValue] = useState('');
   const [showModal, toggleModal] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('submitted')
+    console.log('submitted', selectedUser);
+    addUser(selectedUser, index)
 
   }
 
@@ -16,19 +16,20 @@ function Ticket({title, description, assignedTo}) {
   }
 
   return (
-    <div className="ticket">
-      <div className="list_header">{title}</div>
+    <div draggable onDragStart={e => onDragStart(e, index)} onDrop={e => onDrop(e, index)} onDragOver={e => onDragOver(e)} className="ticket droppable">
+      <div className="ticket_header">{title}</div>
       <div>{description}</div>
       <button onClick={() => toggleModal(!showModal)}>Add Members</button>
       { 
         showModal ? 
         <form onSubmit={handleSubmit}>
           <label>
-            Pick your favorite flavor:
-            <select value={value} onChange={handleChange}>
-              { users.map(user => {
+            Assign Users:
+            <select value={selectedUser} onChange={handleChange}>
+              <option value="">Select someone</option>
+              { users.map((user, i) => {
                   return (
-                    <option value={user.id}>{user.name}</option>
+                    <option key={i} value={i}>{user.name}</option>
                   )
                 })
               }

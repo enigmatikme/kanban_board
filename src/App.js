@@ -37,6 +37,10 @@ function App() {
     setListTitle('');
   }
 
+  const onDragOver = (e) => {
+    e.preventDefault();
+  }
+
   return (
     <div className="App">
       <button class="create_list_btn" onClick={() => toggleModal(!showModal)}>Add Another List</button>
@@ -50,7 +54,7 @@ function App() {
         
         { 
           lists.map((list, i) => {
-            return <List key={i} listName={list.listName} />
+            return <List onDragOver={e => onDragOver(e)} key={i} listName={list.listName} />
           })
         }
       </div>
