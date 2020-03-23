@@ -3,13 +3,14 @@ import Ticket from './Ticket';
 import Modal from './Modal';
 import users from './user';
 
-function List({listName}) {
+function List({listName, listIndex}) {
   const [tickets, setTickets] = useState([{   
     title: 'test1',
     description: 'description test 1',
     assignedTo: ['karin'],
   }]);
   const [showModal, toggleModal] = useState(false);
+  const [draggedItem, setDraggedItem] = useState(null);
   
   const addTicket = (ticket) => {
     setTickets([...tickets, ticket])
@@ -27,17 +28,18 @@ function List({listName}) {
     } else {
       console.log("you've already added this user")
     }
-    console.log("users", assignedUsers)
   }
 
-  const onDragStart = (e, index) => {
-    e.preventDefault();
+  const handleDragStart = (e, index) => {
+    // e.preventDefault();
     console.log("dragged index", index);
-    e.dataTransfer.setData("text/plain",index)
+    // e.dataTransfer.setData("text/plain",index)
+    setDraggedItem(tickets[index]);
+    console.log("DRAGGED ITEM", draggedItem)
 
   }
 
-  const onDrop = (e, index) => {
+  const handleDrop = (e, index) => {
     let id = e.dataTransfer.getData("index");  
   //   let tasks = this.state.tasks.filter((task) => {
   //     if (task.name == id) {               
@@ -56,9 +58,14 @@ function List({listName}) {
 
   }
 
-  const onDragOver = (e) => {
+  const handleDragOver = (e, listIndex) => {
     e.preventDefault();
     console.log("DRAG OVER")
+    if (draggedItem === tickets[listIndex]) return null;
+    const newOrder = tickets.filter(ticket => ticket !== draggedItem)
+    newOrder.splice(listIndex, 0, draggedItem);
+    console.log("NEW ORDER", newOrder)
+    setTickets(newOrder);
   }
 
   return (
@@ -66,7 +73,7 @@ function List({listName}) {
       <div> {listName} </div> 
       <div>
       {tickets.map((ticket, i) => {
-        return <Ticket onDragStart={onDragStart} onDrop={onDrop} onDragOver={onDragOver} {...ticket} addUser={addUser} key={i} index={i} users={users}/>
+        return <Ticket handleDragStart={handleDragStart} handleDragOver={handleDragOver} {...ticket} addUser={addUser} key={i} index={i} users={users}/>
       })}
       <Modal showModal={showModal} addTicket={addTicket}  />
       <button class="add_tix_btn" type="submit" onClick={() => toggleModal(!showModal)}>Add Ticket</button>

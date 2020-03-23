@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Board from './components/Board';
 import List from './components/List';
+import Test from './components/Test';
 
 function App() {
   const [lists, setLists] = useState([]);
@@ -44,6 +45,7 @@ function App() {
   return (
     <div className="App">
       <button class="create_list_btn" onClick={() => toggleModal(!showModal)}>Add Another List</button>
+      {/* <Test /> */}
       { 
         showModal ? 
         <form onSubmit={handleSubmit}>
@@ -54,7 +56,7 @@ function App() {
         
         { 
           lists.map((list, i) => {
-            return <List onDragOver={e => onDragOver(e)} key={i} listName={list.listName} />
+            return <List onDragOver={e => onDragOver(e)} key={i} listName={list.listName} listIndex={i}/>
           })
         }
       </div>

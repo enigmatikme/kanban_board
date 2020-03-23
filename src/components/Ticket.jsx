@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Ticket({title, description, addUser, index, users, onDragStart, onDrop, onDragOver}) {
+function Ticket({title, description, assignedTo, addUser, index, users, handleDragStart, handleDragOver}) {
   const [selectedUser, setValue] = useState('');
   const [showModal, toggleModal] = useState(false);
 
@@ -16,9 +16,10 @@ function Ticket({title, description, addUser, index, users, onDragStart, onDrop,
   }
 
   return (
-    <div draggable onDragStart={e => onDragStart(e, index)} onDrop={e => onDrop(e, index)} onDragOver={e => onDragOver(e)} className="ticket droppable">
+    <div draggable onDragStart={e => handleDragStart(e, index)} onDragOver={e => handleDragOver(e, index)} className="ticket droppable">
       <div className="ticket_header">{title}</div>
       <div>{description}</div>
+      <div>{assignedTo}</div>
       <button onClick={() => toggleModal(!showModal)}>Add Members</button>
       { 
         showModal ? 
