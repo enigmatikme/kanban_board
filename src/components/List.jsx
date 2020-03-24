@@ -38,25 +38,6 @@ function List({listName, listIndex}) {
 
   }
 
-  const handleDrop = (e, index) => {
-    let id = e.dataTransfer.getData("index");  
-  //   let tasks = this.state.tasks.filter((task) => {
-  //     if (task.name == id) {               
-  //       task.category = cat;
-  //     }                     
-  //     return task;          
-  //   });           
-  //   this.setState({                 
-  //     ...this.state,                 
-  //     tasks          
-  //   });    
-  // }
-  console.log("id",id)
-  console.log("index", index);
-  console.log("DROPPE")
-
-  }
-
   const handleDragOver = (e, ticketIndex) => {
     e.preventDefault();
     console.log("LIST NUMBER", listIndex)
