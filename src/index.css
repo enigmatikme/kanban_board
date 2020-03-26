@@ -38,3 +38,12 @@ code {
   border: 3px green solid; 
 }
 
+.assigned_users_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.assigned_user {
+  margin-right: 8px;
+}

@@ -4,12 +4,20 @@ import './App.css';
 import List from './components/List';
 
 function App() {
-  const [lists, setLists] = useState([]);
+  const [lists, setLists] = useState([
+    {
+      listName: 'testing 1', 
+      tickets: []
+    }, 
+    {
+      listName: "testing 2", 
+      tickets: []
+    }
+  ]);
   const [showModal, toggleModal] = useState(false);
   const [listTitle, setListTitle] = useState('');
 
   const handleChange = (e) => {
-    // e.preventDefault();
     setListTitle(e.target.value);
   }
 
@@ -25,10 +33,6 @@ function App() {
     setListTitle('');
   }
 
-  const onDragOver = (e) => {
-    e.preventDefault();
-  }
-
   return (
     <div className="App">
       <button class="create_list_btn" onClick={() => toggleModal(!showModal)}>Add Another List</button>
@@ -42,7 +46,7 @@ function App() {
         
         { 
           lists.map((list, i) => {
-            return <List onDragOver={e => onDragOver(e)} key={i} listName={list.listName} listIndex={i}/>
+            return <List setLists={setLists} key={i} listName={list.listName} currentListIndex={i} lists={lists} />
           })
         }
       </div>

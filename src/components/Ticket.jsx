@@ -16,10 +16,15 @@ function Ticket({title, description, assignedTo, addUser, index, users, handleDr
   }
 
   return (
-    <div draggable onDragStart={e => handleDragStart(e, index)} onDragOver={e => handleDragOver(e, index)} className="ticket droppable">
+    <div id="chocolate" draggable onDragStart={e => handleDragStart(e, index)} onDragOver={e => handleDragOver(e, index)} className="ticket droppable">
       <div className="ticket_header">{title}</div>
-      <div>{description}</div>
-      <div>{assignedTo}</div>
+      <div> {description} </div>
+      <div className="assigned_users_wrapper">
+        { assignedTo && assignedTo.map(user => {
+          return <div className="assigned_user"> {user} </div>
+        })
+        }
+      </div>
       <button onClick={() => toggleModal(!showModal)}>Add Members</button>
       { 
         showModal ? 
