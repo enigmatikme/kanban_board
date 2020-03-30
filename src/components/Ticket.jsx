@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 
-function Ticket({title, description, assignedTo, addUser, index, users, handleDragStart, handleDragOver}) {
+const Container = styled.div`
+  border: 1px solid lightgrey;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 2px;
+  background-color: ${props => (props.isDragging ? "lightgreen" : "white")};
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+`;
+function Ticket({title, description, assignedTo, ticketIndex, users, updateUsers, currentListIndex}) {
   const [selectedUser, setValue] = useState('');
   const [showModal, toggleModal] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('submitted', selectedUser);
-    addUser(selectedUser, index)
-
+    updateUsers(currentListIndex, selectedUser, ticketIndex)
   }
 
   const handleChange = (e) => {
@@ -16,15 +28,25 @@ function Ticket({title, description, assignedTo, addUser, index, users, handleDr
   }
 
   return (
-    <div id="chocolate" draggable onDragStart={e => handleDragStart(e, index)} onDragOver={e => handleDragOver(e, index)} className="ticket droppable">
+    <Draggable 
+      draggableId={`${currentListIndex}-${ticketIndex}`} 
+      index={ticketIndex}
+    >
+      {provided => (
+        <Container className="Container"
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
       <div className="ticket_header">{title}</div>
-      <div> {description} </div>
+      <div>{description}</div>
       <div className="assigned_users_wrapper">
-        { assignedTo && assignedTo.map(user => {
-          return <div className="assigned_user"> {user} </div>
-        })
+        { assignedTo && assignedTo.map((user, i) => {
+          return <div className="assigned_user" key={i}> {user} </div>
+          })
         }
       </div>
+
       <button onClick={() => toggleModal(!showModal)}>Add Members</button>
       { 
         showModal ? 
@@ -34,8 +56,8 @@ function Ticket({title, description, assignedTo, addUser, index, users, handleDr
             <select value={selectedUser} onChange={handleChange}>
               <option value="">Select someone</option>
               { users.map((user, i) => {
-                  return (
-                    <option key={i} value={i}>{user.name}</option>
+                return (
+                  <option key={i} value={i}>{user.name}</option>
                   )
                 })
               }
@@ -45,8 +67,9 @@ function Ticket({title, description, assignedTo, addUser, index, users, handleDr
       </form> : 
         null
       }
-    </div>
-    
+    </Container>
+      )}
+    </Draggable>
   )
 }
 

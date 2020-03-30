@@ -1,38 +1,23 @@
 import React, { useState } from 'react';
 
-function Modal({ addTicket, showModal }) {
+function Modal({ addTicket, showModal, currentListIndex, toggleModal }) {
   const [ticket, setTicket] = useState({
     title: '',
     description: '',
     assignedTo: [],
   })
-  // const [ticket, setTicket] = useState({
-  //   title: '',
-  //   description: '',
-  //   assignedTo: [],
-  // })
 
   const handleChange = (e) => {
-    if (e.target.id === 'title') {
-      setTicket({...ticket, 
+    setTicket({...ticket, 
       [e.target.id] : e.target.value
-      });
-    } else {
-      setTicket({...ticket, 
-        [e.target.id] : e.target.value
-      });
-    }
+    });
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    addTicket(ticket)
-    setTicket({
-      title: '',
-      description: '',
-      assignedTo: []
-    })
+    addTicket(ticket, currentListIndex);
+    toggleModal(!showModal);
   }
 
   if (!showModal) {
