@@ -11,6 +11,7 @@ const Container = styled.div`
   border: 1px solid lightgrey;
   border-radius: 2px;
   width: 220px;
+  background: lightgrey;
 
   // created a flex box where children are aligned vertically 
   display: flex;
@@ -24,7 +25,7 @@ const Title = styled.h3`
 const TaskList = styled.div`
   padding: 8px;
   transition: background-color 0.2s ease;
-  background-color: ${props => (props.isDraggingOver ? "skyblue" : "white")};
+  background-color: ${props => (props.isDraggingOver ? "skyblue" : "lightgrey")};
 
   flex-grow: 1;
   min-height: 100px;
@@ -33,9 +34,16 @@ const TaskList = styled.div`
 function List({currentListIndex, list, addTicket, updateUsers, deleteTicket, lists, setLists}) {
   const [showModal, toggleModal] = useState(false);
 
+  const deleteList = () => {
+    const newList = [...lists];
+    newList.splice(currentListIndex, 1);
+    setLists(newList);
+  }
+
   return (
     <Container>
       <Title> {list.listName} </Title> 
+      <button onClick={deleteList}>x</button>
       <Droppable droppableId={`${currentListIndex}`}>
         {(provided, snapshot) => (
           <TaskList 
