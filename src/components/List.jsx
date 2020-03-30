@@ -30,7 +30,7 @@ const TaskList = styled.div`
   min-height: 100px;
 `;
 
-function List({currentListIndex, list, addTicket, updateUsers}) {
+function List({currentListIndex, list, addTicket, updateUsers, deleteTicket, lists, setLists}) {
   const [showModal, toggleModal] = useState(false);
 
   return (
@@ -47,7 +47,7 @@ function List({currentListIndex, list, addTicket, updateUsers}) {
           {
             list.tickets.map((ticket, i) => {
               return (
-                <Ticket {...ticket} key={i} ticketIndex={i} users={users} updateUsers={updateUsers} currentListIndex={currentListIndex}/>
+                <Ticket {...ticket} key={i} ticketIndex={i} users={users} updateUsers={updateUsers} currentListIndex={currentListIndex} deleteTicket={deleteTicket} lists={lists} setLists={setLists}/>
                 )
               })
             }

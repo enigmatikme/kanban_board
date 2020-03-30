@@ -137,6 +137,10 @@ function App() {
     }
   }
 
+  const deleteTicket = () => {
+    console.log("deleted");
+  }
+
   return (
     <div className="App">
       <button class="create_list_btn" onClick={() => toggleModal(!showModal)}>Add Another List</button>
@@ -151,7 +155,7 @@ function App() {
           <Container>
         { 
           lists.map((list, i) => {
-            return <List setLists={setLists} key={i} currentListIndex={i} list={list} addTicket={addTicket} updateUsers={updateUsers}/>
+            return <List setLists={setLists} key={i} currentListIndex={i} list={list} addTicket={addTicket} updateUsers={updateUsers} deleteTicket={deleteTicket} lists={lists}/>
           })
         }
         </Container>

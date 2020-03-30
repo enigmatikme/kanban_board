@@ -14,7 +14,7 @@ const Container = styled.div`
   align-items: flex-start;
 
 `;
-function Ticket({title, description, assignedTo, ticketIndex, users, updateUsers, currentListIndex}) {
+function Ticket({title, description, assignedTo, ticketIndex, users, updateUsers, currentListIndex, lists, setLists}) {
   const [selectedUser, setValue] = useState('');
   const [showModal, toggleModal] = useState(false);
 
@@ -25,6 +25,15 @@ function Ticket({title, description, assignedTo, ticketIndex, users, updateUsers
 
   const handleChange = (e) => {
     setValue(e.target.value)
+  }
+
+  const change = () => {
+    const newList = [...lists];
+    const newColumn = newList[currentListIndex]
+    newColumn.tickets.splice(ticketIndex, 1);
+    newList[currentListIndex] = newColumn;
+
+    setLists(newList);
   }
 
   return (
@@ -46,8 +55,8 @@ function Ticket({title, description, assignedTo, ticketIndex, users, updateUsers
           })
         }
       </div>
-
       <button onClick={() => toggleModal(!showModal)}>Add Members</button>
+      <button onClick={change}>x</button>
       { 
         showModal ? 
         <form onSubmit={handleSubmit}>
