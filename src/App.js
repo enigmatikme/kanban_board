@@ -6,8 +6,10 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import users from './components/user';
 
+
 const Container = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
 
 function App() {
